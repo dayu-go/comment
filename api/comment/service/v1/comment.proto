@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package comment.aaa.v1;
+
+option go_package = "api/comment/service/v1;v1";
+option java_multiple_files = true;
+option java_package = "comment.api.v1";
+
+import "v1/user.proto";
+import "google/api/annotations.proto";
+// the validate rules:
+// https://github.com/envoyproxy/protoc-gen-validate
+
+service CommentService {
+	rpc CreateComment (CreateCommentRequest) returns (CreateCommentResponse) {}
+	rpc GetComment (GetCommentRequest) returns (GetCommentResponse) {}
+    rpc GetReply (GetReplyRequest) returns (GetReplyResponse) {}
+}
+
+message Comment {
+    int64 id = 1;
+	int64 userid = 2;
+    string content = 3;
+}
+
+message CreateCommentRequest {
+    int64 obj_id = 1;
+    int32 obj_type = 2;
+    int64 root = 3;
+    int64 parent = 4;
+    string message = 5;
+}
+
+message CreateCommentResponse {
+    int64 id = 1;
+}
+
+message GetCommentRequest {
+    int64 obj_id = 1;
+    int32 obj_type = 2;
+    int32 next = 3;
+    int64 sort = 4;
+
+}
+
+message GetCommentResponse {
+    Cursor cursor = 1;
+    repeated Reply replies = 2;
+}
+
+message GetReplyRequest {
+    int64 obj_id = 1;
+    int32 obj_type = 2;
+    int32 page_no = 3;
+    int64 root = 4;
+
+}
+
+message GetReplyResponse {
+    Pagination pagination = 1;
+    repeated Reply replies = 2;
+}
+
+message Reply {
+    int64 id = 1;
+    int32 floor = 2;
+    string content = 3;
+    User user = 4;
+    int32 count = 5;
+    int32 root_count = 6;
+    int32 state = 7;
+    int32 attr = 8;
+    int64 like = 9;
+    int64 create_time = 10;
+    repeated Reply replies = 11;
+}
+
+message Cursor {
+    enum Sort {
+        UNKNOWN = 0;
+        SORT_ORIGIN = 1; // origin
+        SORT_Time = 2;   // sort by time
+        SORT_Hot = 3;    // sort by hot
+    }
+
+    int32 pre = 1;
+    int32 next = 2;
+    int32 page_size = 3;
+    bool has_more = 4;
+    int32 total = 5;
+    Sort sort = 6;
+}
+
+message Pagination {
+    int32 page_no = 1;
+    int32 page_size = 2;
+    int32 total = 3;
+}

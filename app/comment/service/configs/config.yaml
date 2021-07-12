@@ -1,0 +1,18 @@
+app:
+  log_level: debug
+  env: test
+Server:
+  http:
+    network: "tcp"
+    addr: ":9999"
+    duration: 100
+  grpc:
+    network: "tcp"
+    addr: ":10000"
+    duration: 100
+  log_level: debug
+  env: test
+db:
+  dayu:
+    driver: mysql
+    dsn:  root:123456@tcp(127.0.0.1:3306)/dayu?parseTime=true&loc=Local

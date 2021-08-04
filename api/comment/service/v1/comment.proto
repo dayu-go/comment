@@ -12,6 +12,7 @@ import "google/api/annotations.proto";
 // https://github.com/envoyproxy/protoc-gen-validate
 
 service CommentService {
+    // Lagency SLO: 95th in 100ms, 99th in 150ms.
 	rpc CreateComment (CreateCommentRequest) returns (CreateCommentResponse) {}
 	rpc GetComment (GetCommentRequest) returns (GetCommentResponse) {}
     rpc GetReply (GetReplyRequest) returns (GetReplyResponse) {}

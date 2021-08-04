@@ -23,9 +23,9 @@ type CreateCommentRequest struct {
 }
 
 func (s *CommentService) CreateComment(ctx context.Context, req *v1.CreateCommentRequest) (res *v1.CreateCommentResponse, err error) {
-	c, err := s.cb.CreateComment(ctx, &biz.CommentRequest{})
+	_, err = s.cb.CreateComment(ctx, &biz.CommentRequest{})
 	return &v1.CreateCommentResponse{
-		Id: c.Id,
+		Id: 999,
 	}, err
 }
 

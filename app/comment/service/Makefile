@@ -35,7 +35,6 @@ do:
 	echo $(API_PROTO_FILES) 
 	echo $(APP_NAME) 
 
-
 .PHONY: build-service
 build-service:
 	export GO111MODULE=on && \
@@ -45,4 +44,7 @@ build-service:
 
 .PHONY: run-service
 run-service:
-	./$(SERVER_NAME)
+	./$(APP_NAME)
+
+.PHONY: restart-service
+restart-service: build-service run-service
